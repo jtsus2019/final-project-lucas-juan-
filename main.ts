@@ -1,9 +1,6 @@
 namespace SpriteKind {
     export const portal = SpriteKind.create()
 }
-mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
-	
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.portal, function (sprite, otherSprite) {
     tiles.setCurrentTilemap(tilemap`level4`)
 })
@@ -100,3 +97,22 @@ let mySprite4 = sprites.create(img`
     .......cccccfbdbbfc.............
     .............fffff..............
     `, SpriteKind.Enemy)
+let mySprite5 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . 4 4 4 4 . . . . . . 
+    . . . . 4 4 4 5 5 4 4 4 . . . . 
+    . . . 3 3 3 3 4 4 4 4 4 4 . . . 
+    . . 4 3 3 3 3 2 2 2 1 1 4 4 . . 
+    . . 3 3 3 3 3 2 2 2 1 1 5 4 . . 
+    . 4 3 3 3 3 2 2 2 2 2 5 5 4 4 . 
+    . 4 3 3 3 2 2 2 4 4 4 4 5 4 4 . 
+    . 4 4 3 3 2 2 4 4 4 4 4 4 4 4 . 
+    . 4 2 3 3 2 2 4 4 4 4 4 4 4 4 . 
+    . . 4 2 3 3 2 4 4 4 4 4 2 4 . . 
+    . . 4 2 2 3 2 2 4 4 4 2 4 4 . . 
+    . . . 4 2 2 2 2 2 2 2 2 4 . . . 
+    . . . . 4 4 2 2 2 2 4 4 . . . . 
+    . . . . . . 4 4 4 4 . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.portal)
+mySprite5.setPosition(160, 120)
