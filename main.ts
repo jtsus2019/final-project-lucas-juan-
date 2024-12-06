@@ -267,8 +267,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 function createEnemies () {
-    list = [
-    sprites.create(img`
+    mySprite3 = sprites.create(img`
         ........................
         ........................
         ........................
@@ -293,26 +292,8 @@ function createEnemies () {
         ........................
         ........................
         ........................
-        `, SpriteKind.Enemy),
-    sprites.create(img`
-        .............ccfff..............
-        ............cddbbf..............
-        ...........cddbbf...............
-        ..........fccbbcf............ccc
-        ....ffffffccccccff.........ccbbc
-        ..ffbbbbbbbbbbbbbcfff.....cdbbc.
-        ffbbbbbbbbbcbcbbbbcccff..cddbbf.
-        fbcbbbbbffbbcbcbbbcccccfffdbbf..
-        fbbb1111ff1bcbcbbbcccccccbbbcf..
-        .fb11111111bbbbbbcccccccccbccf..
-        ..fccc33cc11bbbbccccccccfffbbcf.
-        ...fc131c111bbbcccccbdbc...fbbf.
-        ....f33c111cbbbfdddddcc.....fbbf
-        .....ff1111fbdbbfddcc........fff
-        .......cccccfbdbbfc.............
-        .............fffff..............
-        `, SpriteKind.Enemy),
-    sprites.create(img`
+        `, SpriteKind.Enemy)
+    mySprite4 = sprites.create(img`
         . . f f f . . . . . . . . f f f 
         . f f c c . . . . . . f c b b c 
         f f c c . . . . . . f c b b c . 
@@ -329,26 +310,57 @@ function createEnemies () {
         . f 2 2 2 2 b b b b c f . . . . 
         . . f b b b b b b c f . . . . . 
         . . . f f f f f f f . . . . . . 
-        `, SpriteKind.Enemy),
-    sprites.create(img`
-        . . . . b b b b . . . . . . . . 
-        . . . b 3 3 3 3 b b b b . . . . 
-        . . b b 3 3 3 3 3 1 1 b b c c . 
-        . . b 1 1 3 3 3 3 3 1 1 3 3 c c 
-        . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
-        . . c 3 3 3 3 3 3 3 c c c b b f 
-        . c 3 3 3 3 3 b b b b c c c b f 
-        c 3 3 3 3 b b d d d d d c c b f 
-        c 3 3 c b d d d d d d c d c c . 
-        f 3 c c c d d c d d d c d b c . 
-        f b c c c d d d c d d d d d f . 
-        f b c c c d d d d d b b b d f . 
-        f f b b c b d d d d d d d c . . 
-        . f f f f b c c d d d d f f . . 
-        . . f b d d b c c f f b b f f . 
-        . . f d d d b . . f f b b b f . 
         `, SpriteKind.Enemy)
-    ]
+    mySprite5 = sprites.create(img`
+        ....................ccfff...........
+        ..........fffffffffcbbbbf...........
+        .........fbbbbbbbbbfffbf............
+        .........fbb111bffbbbbff............
+        .........fb11111ffbbbbbcff..........
+        .........f1cccc11bbcbcbcccf.........
+        ..........fc1c1c1bbbcbcbcccf...ccccc
+        ............c3331bbbcbcbccccfccddbbc
+        ...........c333c1bbbbbbbcccccbddbcc.
+        ...........c331c11bbbbbcccccccbbcc..
+        ..........cc13c111bbbbccccccffbccf..
+        ..........c111111cbbbcccccbbc.fccf..
+        ...........cc1111cbbbfdddddc..fbbcf.
+        .............cccffbdbbfdddc....fbbf.
+        ..................fbdbbfcc......fbbf
+        ...................fffff.........fff
+        `, SpriteKind.Enemy)
+    mySprite6 = sprites.create(img`
+        ........................
+        ........................
+        ........................
+        ...........ccc..........
+        ...........cccc.........
+        .......ccc..ccccccc.....
+        .......cccccc555555cc...
+        ........ccb5555555555c..
+        .....cc..b555555555555c.
+        .....cccb55555bcc555555c
+        ......cb555555555c55d55c
+        ......b5555555555555555c
+        ...cc.b555dd5555bb1bbbc.
+        ....ccd55ddddd5bbbb335c.
+        ...ccbdddddddd5bbbb335c.
+        .ccccddddddddd55bb3335c.
+        cdcccdddddb55bb55b3335c.
+        cddbddddddb555bb553335c.
+        cddddddddddb5555b5555c..
+        ccddddddbd55bb55cbccc...
+        .ccddddbbbdd55ccbbc.....
+        ...ccbbbcbddddccdddc....
+        .....ccccdd555dccccc....
+        ........cccccccc........
+        `, SpriteKind.Enemy)
+    mySprite3.setFlag(SpriteFlag.Invisible, false)
+    mySprite4.setFlag(SpriteFlag.Invisible, false)
+    mySprite5.setFlag(SpriteFlag.Invisible, false)
+    mySprite6.setFlag(SpriteFlag.Invisible, false)
+    spritelist = sprites.allOfKind(SpriteKind.Player)
+    sprite = spritelist[randint(0, 3)]
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -456,8 +468,14 @@ function TestLvL1 () {
     createPlayerTwo()
     createEnemies()
     startLvl1()
+    createEnemies()
 }
-let list: Sprite[] = []
+let sprite: Sprite = null
+let spritelist: Sprite[] = []
+let mySprite6: Sprite = null
+let mySprite5: Sprite = null
+let mySprite4: Sprite = null
+let mySprite3: Sprite = null
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
 TestLvL1()
