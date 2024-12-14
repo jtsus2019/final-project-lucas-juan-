@@ -218,6 +218,7 @@ function startLvl1 () {
     tiles.placeOnTile(mySprite, tiles.getTileLocation(20, 20))
     tiles.placeOnTile(mySprite2, tiles.getTileLocation(20, 21))
     scene.cameraFollowSprite(mySprite)
+    Level_1 = true
 }
 function level2 () {
     tiles.setCurrentTilemap(tilemap`level8`)
@@ -301,7 +302,106 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 function createEnemies () {
-	
+    let list: Sprite[] = []
+    for (let index = 0; index < 3; index++) {
+        enemies1 = sprites.create(img`
+            ........................
+            ........................
+            ........................
+            ........................
+            ..........ffff..........
+            ........ff1111ff........
+            .......fb111111bf.......
+            .......f11111111f.......
+            ......fd11111111df......
+            ......fd11111111df......
+            ......fddd1111dddf......
+            ......fbdbfddfbdbf......
+            ......fcdcf11fcdcf......
+            .......fb111111bf.......
+            ......fffcdb1bdffff.....
+            ....fc111cbfbfc111cf....
+            ....f1b1b1ffff1b1b1f....
+            ....fbfbffffffbfbfbf....
+            .........ffffff.........
+            ...........fff..........
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Enemy)
+        list.push(enemies1)
+    }
+    for (let index = 0; index < 3; index++) {
+        enemies2 = sprites.create(img`
+            . . f f f . . . . . . . . f f f 
+            . f f c c . . . . . . f c b b c 
+            f f c c . . . . . . f c b b c . 
+            f c f c . . . . . . f b c c c . 
+            f f f c c . c c . f c b b c c . 
+            f f c 3 c c 3 c c f b c b b c . 
+            f f b 3 b c 3 b c f b c c b c . 
+            . c 1 b b b 1 b c b b c c c . . 
+            . c 1 b b b 1 b b c c c c . . . 
+            c b b b b b b b b b c c . . . . 
+            c b 1 f f 1 c b b b b f . . . . 
+            f f 1 f f 1 f b b b b f c . . . 
+            f f 2 2 2 2 f b b b b f c c . . 
+            . f 2 2 2 2 b b b b c f . . . . 
+            . . f b b b b b b c f . . . . . 
+            . . . f f f f f f f . . . . . . 
+            `, SpriteKind.Enemy)
+        list.push(enemies2)
+    }
+    for (let index = 0; index < 3; index++) {
+        enemies3 = sprites.create(img`
+            . . . . b b b b . . . . . . . . 
+            . . . b 3 3 3 3 b b b b . . . . 
+            . . b b 3 3 3 3 3 1 1 b b c c . 
+            . . b 1 1 3 3 3 3 3 1 1 3 3 c c 
+            . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
+            . . c 3 3 3 3 3 3 3 c c c b b f 
+            . c 3 3 3 3 3 b b b b c c c b f 
+            c 3 3 3 3 b b d d d d d c c b f 
+            c 3 3 c b d d d d d d c d c c . 
+            f 3 c c c d d c d d d c d b c . 
+            f b c c c d d d c d d d d d f . 
+            f b c c c d d d d d b b b d f . 
+            f f b b c b d d d d d d d c . . 
+            . f f f f b c c d d d d f f . . 
+            . . f b d d b c c f f b b f f . 
+            . . f d d d b . . f f b b b f . 
+            `, SpriteKind.Enemy)
+        list.push(enemies3)
+    }
+    for (let index = 0; index < 3; index++) {
+        enemies4 = sprites.create(img`
+            . . . . . c c c c c c c . . . . 
+            . . . . c 6 7 7 7 7 7 6 c . . . 
+            . . . c 7 c 6 6 6 6 c 7 6 c . . 
+            . . c 6 7 6 f 6 6 f 6 7 7 c . . 
+            . . c 7 7 7 7 7 7 7 7 7 7 c . . 
+            . . f 7 8 1 f f 1 6 7 7 7 f . . 
+            . . f 6 f 1 f f 1 f 7 7 7 f . . 
+            . . . f f 2 2 2 2 f 7 7 6 f . . 
+            . . c c f 2 2 2 2 7 7 6 f c . . 
+            . c 7 7 7 7 7 7 7 7 c c 7 7 c . 
+            c 7 1 1 1 7 7 7 7 f c 6 7 7 7 c 
+            f 1 1 1 1 1 7 6 f c c 6 6 6 c c 
+            f 1 1 1 1 1 1 6 6 c 6 6 6 c . . 
+            f 6 1 1 1 1 1 6 6 6 6 6 6 c . . 
+            . f 6 1 1 1 1 1 6 6 6 6 c . . . 
+            . . f f c c c c c c c c . . . . 
+            `, SpriteKind.Enemy)
+        list.push(enemies4)
+    }
+    if (Level_1) {
+        for (let index = 0; index < randint(2, 4); index++) {
+            spawnEnemies = list[randint(0, 11)]
+            tiles.placeOnRandomTile(spawnEnemies, sprites.dungeon.collectibleInsignia)
+            spawnEnemies.follow(mySprite, randint(10, 50))
+        }
+    }
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -429,6 +529,12 @@ function TestLvL1 () {
     startLvl1()
     createEnemies()
 }
+let spawnEnemies: Sprite = null
+let enemies4: Sprite = null
+let enemies3: Sprite = null
+let enemies2: Sprite = null
+let enemies1: Sprite = null
+let Level_1 = false
 let projectile: Sprite = null
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
