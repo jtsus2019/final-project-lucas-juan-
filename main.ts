@@ -156,6 +156,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+function level3 () {
+    tiles.setCurrentTilemap(tilemap`level10`)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(20, 21))
+    tiles.placeOnTile(mySprite2, tiles.getTileLocation(20, 21))
+}
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
 	
 })
