@@ -156,11 +156,17 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
+	
+})
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
 })
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.portal, function (sprite, otherSprite) {
+    level2()
 })
 function createPlayerTwo () {
     mySprite2 = sprites.create(img`
@@ -183,12 +189,35 @@ function createPlayerTwo () {
         `, SpriteKind.Player)
     mp.setPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two), mySprite2)
     mp.moveWithButtons(mp.playerSelector(mp.PlayerNumber.Two))
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 3 3 . . . . . . . 
+        . . . . . . . 3 3 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite2, 50, 50)
 }
 function startLvl1 () {
     tiles.setCurrentTilemap(tilemap`level2`)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(20, 20))
     tiles.placeOnTile(mySprite2, tiles.getTileLocation(20, 21))
     scene.cameraFollowSprite(mySprite)
+}
+function level2 () {
+    tiles.setCurrentTilemap(tilemap`level8`)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(20, 21))
+    tiles.placeOnTile(mySprite2, tiles.getTileLocation(20, 21))
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -267,100 +296,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 function createEnemies () {
-    mySprite3 = sprites.create(img`
-        ........................
-        ........................
-        ........................
-        ........................
-        ..........ffff..........
-        ........ff1111ff........
-        .......fb111111bf.......
-        .......f11111111f.......
-        ......fd11111111df......
-        ......fd11111111df......
-        ......fddd1111dddf......
-        ......fbdbfddfbdbf......
-        ......fcdcf11fcdcf......
-        .......fb111111bf.......
-        ......fffcdb1bdffff.....
-        ....fc111cbfbfc111cf....
-        ....f1b1b1ffff1b1b1f....
-        ....fbfbffffffbfbfbf....
-        .........ffffff.........
-        ...........fff..........
-        ........................
-        ........................
-        ........................
-        ........................
-        `, SpriteKind.Enemy)
-    mySprite4 = sprites.create(img`
-        . . f f f . . . . . . . . f f f 
-        . f f c c . . . . . . f c b b c 
-        f f c c . . . . . . f c b b c . 
-        f c f c . . . . . . f b c c c . 
-        f f f c c . c c . f c b b c c . 
-        f f c 3 c c 3 c c f b c b b c . 
-        f f b 3 b c 3 b c f b c c b c . 
-        . c 1 b b b 1 b c b b c c c . . 
-        . c 1 b b b 1 b b c c c c . . . 
-        c b b b b b b b b b c c . . . . 
-        c b 1 f f 1 c b b b b f . . . . 
-        f f 1 f f 1 f b b b b f c . . . 
-        f f 2 2 2 2 f b b b b f c c . . 
-        . f 2 2 2 2 b b b b c f . . . . 
-        . . f b b b b b b c f . . . . . 
-        . . . f f f f f f f . . . . . . 
-        `, SpriteKind.Enemy)
-    mySprite5 = sprites.create(img`
-        ....................ccfff...........
-        ..........fffffffffcbbbbf...........
-        .........fbbbbbbbbbfffbf............
-        .........fbb111bffbbbbff............
-        .........fb11111ffbbbbbcff..........
-        .........f1cccc11bbcbcbcccf.........
-        ..........fc1c1c1bbbcbcbcccf...ccccc
-        ............c3331bbbcbcbccccfccddbbc
-        ...........c333c1bbbbbbbcccccbddbcc.
-        ...........c331c11bbbbbcccccccbbcc..
-        ..........cc13c111bbbbccccccffbccf..
-        ..........c111111cbbbcccccbbc.fccf..
-        ...........cc1111cbbbfdddddc..fbbcf.
-        .............cccffbdbbfdddc....fbbf.
-        ..................fbdbbfcc......fbbf
-        ...................fffff.........fff
-        `, SpriteKind.Enemy)
-    mySprite6 = sprites.create(img`
-        ........................
-        ........................
-        ........................
-        ...........ccc..........
-        ...........cccc.........
-        .......ccc..ccccccc.....
-        .......cccccc555555cc...
-        ........ccb5555555555c..
-        .....cc..b555555555555c.
-        .....cccb55555bcc555555c
-        ......cb555555555c55d55c
-        ......b5555555555555555c
-        ...cc.b555dd5555bb1bbbc.
-        ....ccd55ddddd5bbbb335c.
-        ...ccbdddddddd5bbbb335c.
-        .ccccddddddddd55bb3335c.
-        cdcccdddddb55bb55b3335c.
-        cddbddddddb555bb553335c.
-        cddddddddddb5555b5555c..
-        ccddddddbd55bb55cbccc...
-        .ccddddbbbdd55ccbbc.....
-        ...ccbbbcbddddccdddc....
-        .....ccccdd555dccccc....
-        ........cccccccc........
-        `, SpriteKind.Enemy)
-    mySprite3.setFlag(SpriteFlag.Invisible, false)
-    mySprite4.setFlag(SpriteFlag.Invisible, false)
-    mySprite5.setFlag(SpriteFlag.Invisible, false)
-    mySprite6.setFlag(SpriteFlag.Invisible, false)
-    spritelist = sprites.allOfKind(SpriteKind.Player)
-    sprite = spritelist[randint(0, 3)]
+	
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -462,6 +398,24 @@ function createPlayerOne () {
         `, SpriteKind.Player)
     mp.setPlayerSprite(mp.playerSelector(mp.PlayerNumber.One), mySprite)
     mp.moveWithButtons(mp.playerSelector(mp.PlayerNumber.One))
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 3 3 . . . . . . . 
+        . . . . . . . 3 3 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 50, 50)
 }
 function TestLvL1 () {
     createPlayerOne()
@@ -470,12 +424,7 @@ function TestLvL1 () {
     startLvl1()
     createEnemies()
 }
-let sprite: Sprite = null
-let spritelist: Sprite[] = []
-let mySprite6: Sprite = null
-let mySprite5: Sprite = null
-let mySprite4: Sprite = null
-let mySprite3: Sprite = null
+let projectile: Sprite = null
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
 TestLvL1()
